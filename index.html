@@ -23,15 +23,36 @@
             height: 100lvh;
             overflow: hidden;
         }
+        select{
+            position: absolute;
+            top: 1em;
+            left: 1em;
+        }
     </style>
 </head>
 <body>
+    <select name="" id="" onchange="console.log(this.value);location.hash = this.value;location.reload()">
+        <option value=""></option>
+        <option value="fractals">fractals</option>
+        <option value="straight_strokes">Strokes</option>
+        <option value="curves">curves</option>
+        <option value="branches">branches</option>
+    </select>
     <canvas id="canvas"></canvas>
     <script>
-       const script_src = (location.href.includes("fractas") ? "./fractals.js" : "straight_strokes.js" )
-        const script = document.createElement('script')
-        script.src = script_src
-        document.body.append(script)
+        const script_path = window.location.href.includes("#") ?window.location.href.substring( window.location.href.lastIndexOf("#")+1) : ""
+        console.log(script_path);
+        function setScript(value) {
+            let script = document.getElementById('drawscript')
+            if(script) script.remove()
+
+            script = document.createElement('script')
+            script.id = "drawscript"
+            script.src = `./${value}.js`
+            document.body.append(script)
+        }
+       
+        setScript(script_path)
     </script>
 </body>
 </html>
